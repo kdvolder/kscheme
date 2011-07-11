@@ -1,0 +1,156 @@
++------------------------------------------------------------
+| readme.txt
+|
+|   Readme file for the MyScheme project
++------------------------------------------------------------
+
+For now this file is just a place to collect some random thoughts.
+
+* Why this implementation
+
+  - just because it is fun
+  - because there appear to be no implementations of
+    Scheme-like languages on the JVM that:
+      - provide proper tail call implementation
+      - provide full continuation support.
+  - Note: Actualy, there is one implementation: SISC
+      http://sisc-scheme.org/
+      It claims full R5RS support, which includes continuations
+      and tail calls.
+
+* To Scheme or not to Scheme:
+
+  Is this going to evolve into a "real" Scheme implementation.
+  If yes, we probably need to study the R6RS report and strive
+  to be (eventually) fully compliant with it.
+  
+  Alternatively, maybe we want to develop a language that is 
+  more "in tune" with the JVM and standard Java libraries. I.e.
+  we would strive to build a "thin layer" of Scheme-like language
+  on top of JVM / Java libraries. In 
+  this case, we should think of a better name than "MyScheme".
+  
+  This would probably be similar to clojure in many ways.
+  However we will take as explicit design goals:
+    - must have proper tail calls/
+    - must have full continuation support.    
+    
+* Mutable java Strings!
+
+  Actually there is a hack to get around Java strings being immutable.
+  http://directwebremoting.org/blog/joe/2005/05/26/1117108773674.html
+  
+  This hack was exploited to implement string-set! whilst keeping
+  java.lang.String as the representation for Scheme Strings.
+  
+  This hack may come back to haunt us however, since it won't work
+  in an environment with a SecurityManager that prohibits this
+  use of reflection.
+    
+* R6RS or not?
+
+  After reading a lot about the R6RS and the discussion 
+  that went into the ratification process. I think that if
+  we want to support a Standard. R5RS seems like a better
+  choice. R6RS seems to be overly complex and I would say
+  is not anymore in the spirit of Scheme.
+  
+  R5RS requires that hygienic macros be implemented.
+  
+* PLT ideas
+
+  Cool about PLT is that is able to provide many language
+  implementations.
+  
+  Maybe we could do something similar, thereby marrying the
+  idea of "Java symbiosys" at the bottom layer, with a RnRS 
+  compliant layer built on top?
+  
+* To compile or not to compile?
+
+  The current implementation is a pure interpeter.
+  
+  We should probably keep in mind that a compiler using ASM
+  would be more performant.
+  
+  Also, for total interoparability with Java, we should be
+  able to define new classes from MyScheme. This will require
+  at least some dynamic byte-code generation.
+  
+  ASM is probably the right tool for the Job. JavaAssist is also
+  interesting.
+  
+* What about clojure?
+
+  Maybe we could pick up many good ideas from Clojure.
+  
+* Namespaces
+
+  A lot of the code in the current interpreter manipulates
+  Map-like things: 
+    - environments
+    - frames
+    - modules
+    - a module-map that keeps track of loaded modules.
+  It feels like we should try to figure out a more elegant
+  way to factor this.
+  
+  Note: frames and modules are now one and the same.
+  
+  It would be cool if we had a mechanism to define namespaces
+  in scheme itself. E.g. by writing a Scheme function of
+  type
+  
+     <Symbol> -> <Value>
+ 
+  I was thinking that an interface called "NameSpace" should
+  be provided, with a host of implementations that do the
+  name to value mapping in different ways.
+  
+  Note: currently the Frame interface could fill this role.
+  
+* reader, parser, macro expansion, errors
+
+  Older versions of Scheme make no distinction between 
+  "syntax objects" and scheme sexp. But newer versions
+  of Scheme have more complex implementation that use
+  different kinds of objects to represent syntax.
+  
+  These objects are "richer" to allow hiegienic macros
+  and also can hold information that allows debuggers
+  and error message to pinpoint source locations.
+  
+  Good error messages that at least point to a location
+  in a file for errors are really a must.
+  
+  Our current implementation uses an "old style" 
+  representation of syntax with plain Scheme data. 
+  This will not allow for good error messages
+  (there is no way to tell for a given symbol, pair
+  etc. where in the source code this thing was parsed).
+  
+* macro expansion
+
+  Currently macro expansion is done "lazyly". That is
+  it is done during program execution and the rewritten
+  expressions are mutated to avoid redoing the expansion 
+  more than once. 
+  
+  Strictly speaking this is not safe:
+  
+  eg. let's say exp = (<macro-expression> ...)
+  
+  If <macro-expression> evaluates to a syntax transformer then
+  the transformer is applied and the exp is mutated to
+  to take the form of the result.
+  
+  However, it is possible in theory that <macro-expression> might not
+  always evaluate to the same macro.
+  
+  In normal Scheme implementations, macro expansion is a separate 
+  phase which happens entirely before interpretation or compilation.
+  
+  In normal Scheme implementations, <macro-expression> can not be
+  an arbitrary expression. It can only be a keyword that is bound
+  to a syntax expander at macro-expansion time.
+  
