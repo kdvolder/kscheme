@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import ca.kscheme.data.KSchemeException;
 import ca.kscheme.data.SProcedure;
 import ca.kscheme.data.SchemeValue;
-import static ca.kscheme.data.SchemeValue.*;
 
 public abstract class Cont extends SProcedure {
 	
@@ -77,11 +76,17 @@ public abstract class Cont extends SProcedure {
 		return raise(this,info,e);
 	}
 
-	public Trampoline raise(Cont origin, Object info, Exception e) {
-		if (parent==null)
-			throw new ErrorWithCont(info, origin, e);
-		else
+	public Trampoline raise(final Cont origin, final Object info, final Exception e) {
+		if (parent==null) {
+			return new Trampoline() {
+				@Override
+				public Trampoline force1() {
+					throw new ErrorWithCont(info, origin, e);
+				}
+			};
+		} else {
 			return parent.raise(origin, info, e);
+		}
 	}
 	
 }

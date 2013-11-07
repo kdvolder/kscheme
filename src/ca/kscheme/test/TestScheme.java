@@ -158,7 +158,6 @@ public class TestScheme {
 
 	@Test
 	public void testFunnySymbols() throws Exception {
-		require("common-list-functions");
 		testEval(makeSymbol("Ljava.lang.Object;"), "'|Ljava.lang.Object;|");
 		testEval(true,  "(every symbol? '(a b c))");
 		testEval(true,  "(every symbol? '(+ - ... !.. $.+ %.- &.! *.: /:. :+. <-. =. >. ?. ~. _. ^.))");
@@ -339,10 +338,6 @@ public class TestScheme {
 		scheme.parseAndRun("(test-sc4)");
 	}
 
-	@Test public void testSelf() throws Exception {
-		scheme.load("self-test.scm");
-	}
-	
 	@Test public void testSendNonStatic() throws Exception {
 		testEval((Object)"abc", "((method (|getClass| \"java.lang.Object\") '|toString|) 'abc)");
 		testEval((Object)"abcdef", 

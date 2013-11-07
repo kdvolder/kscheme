@@ -10,7 +10,6 @@
 ; KScheme environment.
 
 (:require "ca.kscheme.primitives.JavaClasses")
-(:require "ca.kscheme.primitives.Syntaxes")
 (:require "ca.kscheme.primitives.Procedures")
 (:require "ca.kscheme.primitives.InterpreterProcedures")
 
@@ -66,7 +65,7 @@
 (define char charClass)
 
 ;A few shortcuts to important KScheme classes
-(define SchemeInterpreter (getClass "ca.kscheme.interp.KSchemeInterpreter"))
+(define SchemeInterpreter (getClass "ca.kscheme.interp.CoreInterpreter"))
 (define SInputPort        (getClass "ca.kscheme.data.SInputPort"))
 (define SMacro            (getClass "ca.kscheme.data.SMacro"))
 (define SPair             (getClass "ca.kscheme.data.IPair"))
@@ -1042,6 +1041,15 @@
              (display x))))))
 
 ; - - kscheme specific procedures not part of slib or r4rs - - - - - 
+
+(define (every pred? lis) 
+  (cond ((null? lis)
+         #t)
+        ((null? (cdr lis))
+         (pred? (car lis)))
+        (else
+         (and (pred? (car lis))
+              (every pred? (cdr lis))))))
 
 (define .toString  (method Object 'toString))
 (define (->string x)

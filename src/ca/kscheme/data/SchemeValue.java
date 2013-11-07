@@ -9,8 +9,7 @@ import java.io.StringReader;
 import java.net.URL;
 
 import ca.kscheme.interp.Cont;
-import ca.kscheme.interp.ErrorWithCont;
-import ca.kscheme.interp.SSyntax;
+import ca.kscheme.interp.CoreInterpreter.SSyntax;
 import ca.kscheme.interp.Trampoline;
 import ca.kscheme.reader.SyntaxObj;
 

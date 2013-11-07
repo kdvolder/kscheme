@@ -14,7 +14,6 @@ import java.net.URL;
 
 import ca.kscheme.data.KSchemeException;
 import ca.kscheme.data.SInputPort;
-import ca.kscheme.interp.Require;
 import ca.kscheme.namespace.Frame;
 import ca.kscheme.reader.SchemeReader;
 
@@ -144,11 +143,4 @@ public abstract class KScheme {
 		compile(exp);
 		return execute();
 	}
-	
-	public void setup() throws Exception {
-		require(Require.class);
-		load(KScheme.class.getResource("bootstrap.scm"));
-		protectEnv();
-	}
-
 }

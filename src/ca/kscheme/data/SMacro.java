@@ -1,12 +1,11 @@
 package ca.kscheme.data;
 
 import ca.kscheme.interp.Cont;
-import ca.kscheme.interp.ErrorWithCont;
-import ca.kscheme.interp.SSyntax;
 import ca.kscheme.interp.CoreInterpreter;
+import ca.kscheme.interp.CoreInterpreter.SSyntax;
 import ca.kscheme.interp.Trampoline;
 import ca.kscheme.namespace.Env;
-import ca.kscheme.primitives.Syntaxes;
+import ca.kscheme.primitives.PrimitiveSyntaxes;
 
 public class SMacro extends SSyntax {
 
@@ -27,7 +26,7 @@ public class SMacro extends SSyntax {
 						setCdr(exp, cdr(transformed));
 					}
 					else {
-						setCar(exp, Syntaxes.begin);
+						setCar(exp, PrimitiveSyntaxes.begin);
 						setCdr(exp, cons(transformed, makeNull()));
 					}
 				} catch (KSchemeException e) {
