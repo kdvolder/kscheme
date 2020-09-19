@@ -86,6 +86,9 @@ This file is just a place to collect some random thoughts.
   ASM is probably the right tool for the Job. JavaAssist is also
   interesting.
   
+  An interesting idea is exploring the use of Graal/Truffle to 
+  implement kscheme as a jit compiler.
+  
 * What about clojure?
 
   Maybe we could pick up many good ideas from Clojure.
