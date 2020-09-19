@@ -96,6 +96,7 @@
         (Field.get field '()))
       (lambda (obj)
         (Field.get field obj))))
+(define Object.getClass (method Object 'getClass))
 
 ; - - procedures for manipulating Scheme data - - - - - - - - - -
 
@@ -625,6 +626,8 @@
   
 (define string-length (method String 'length))
 (define String.concat (method String 'concat String))
+(define String.toCharArray (method String 'toCharArray))
+
 (define (string-append . strings)
    (cond ((null? strings) 
           "")
@@ -649,11 +652,24 @@
 (define string-ends-with?
   (method String 'endsWith String))
 
-(define string-set!
-  (lambda (str n c)
-    (define String.value (get-field String 'value))
-    (let ((chars (String.value str)))
-      (vector-set! chars n c))))
+; TODO? R4RS Strings are mutable. 
+; kscheme Strings are not mutable. This is because since we represent 
+; them as just plain java strings. These are not mutable.
+; The implementation below used to work, but... doesn't anymore.
+; (define string-set!
+;   (lambda (str n c)
+;     (define String.value (get-field String 'value))
+;     (let ((chars (String.value str)))
+;       (vector-set! chars n c))))
+
+(define (string-map char-fun s)
+  (let ((buf (make-string-builder))
+        (len (string-length s)))
+    (let loop ((i 0))
+      (cond ((< i len)
+             (string-builder-append! buf (char-fun (string-ref s i)))
+             (loop (+ i 1)))
+            (else (->string buf))))))
 
 (define string<? (Comparable-comparer <int))
 (define string>? (Comparable-comparer >int))
@@ -665,8 +681,7 @@
     (comp (string-upcase s1) (string-upcase s2))))
 
 (define (string->list str)
-  (define String.value (get-field String 'value))
-  (vector->list (String.value str)))  
+  (vector->list (String.toCharArray str)))
   
 (define string-ci=? (make-string-ci-comparer string=?))
 (define string-ci<? (make-string-ci-comparer string<?))
