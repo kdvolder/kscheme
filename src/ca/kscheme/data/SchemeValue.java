@@ -19,7 +19,7 @@ import ca.kscheme.reader.SyntaxObj;
  * 
  * However, there is no real need to create subclasses for this
  * purpose. Indeed, the idea is that any Java object should be
- * compatible with KScheme, including the null pointer "object".
+ * compatible with KScheme, including the null pointer "objec+1".
  * 
  * This class therefore contains mostly static methods that can
  * be called on Objects of any type. Typically, they perform

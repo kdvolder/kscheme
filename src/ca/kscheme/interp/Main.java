@@ -14,5 +14,15 @@ public class Main {
 		}
 		kscheme.readEvalPrintLoop();
 	}
+	
+	/*
+(define (str-copy s)
+  (let ((v (make-string (string-length s))))
+    (do ((i (- (string-length v) 1) (- i 1)))
+	((< i 0) v)
+	  (display i)
+	  (newline)
+      (string-set! v i (string-ref s i)))))
+	 */
 
 }

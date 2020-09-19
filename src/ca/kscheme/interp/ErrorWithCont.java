@@ -1,7 +1,5 @@
 package ca.kscheme.interp;
 
-import ca.kscheme.data.IPair;
-import ca.kscheme.data.KSchemeException;
 import ca.kscheme.data.SchemeValue;
 
 public class ErrorWithCont extends Error {

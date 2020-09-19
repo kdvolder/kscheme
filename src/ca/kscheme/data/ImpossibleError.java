@@ -1,8 +1,8 @@
 package ca.kscheme.data;
 
 /**
- * This unchecked Exception gets used to rethrown for excpetions that
- * are bing caught which *should* be impossible unless there are bugs
+ * This unchecked Exception gets used to rethrow for exceptions that
+ * are being caught which *should* be impossible unless there are bugs
  * in the implementation.
  * 
  * @author kdvolder

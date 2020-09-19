@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.org.apache.bcel.internal.generic.AllocationInstruction;
+import com.github.kdvolder.util.Assert;
 
-import junit.framework.Assert;
 import ca.kscheme.data.KSchemeException;
 import ca.kscheme.data.SSymbol;
-import ca.kscheme.data.SchemeValue;
 
 /**
  * An implementation of Frame backed by a (Hash)Map
@@ -49,7 +47,7 @@ public class HashFrame extends Frame {
 	 * For use in subclasses to initialize the frame with automatically defined symbols.
 	 */
 	protected void put(SSymbol sym, Object val) {
-		Assert.assertFalse(map.containsKey(sym));
+		Assert.isLegalArgument("sym", sym, !map.containsKey(sym));
 		map.put(sym, new ImmutableRef<Object>(val));
 	}
 

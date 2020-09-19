@@ -3,21 +3,14 @@ package ca.kscheme.primitives;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Assert;
 
 import ca.kscheme.data.KSchemeException;
 import ca.kscheme.data.SProcedure;
-import ca.kscheme.data.SSymbol;
-import ca.kscheme.data.SchemeValue;
 import ca.kscheme.interp.Cont;
 import ca.kscheme.interp.ErrorWithCont;
 import ca.kscheme.interp.KSchemeAssert;
 import ca.kscheme.interp.Trampoline;
 import ca.kscheme.namespace.ClassFrame;
-import ca.kscheme.namespace.HashFrame;
 import ca.kscheme.namespace.SchemeName;
 
 public class Procedures extends ClassFrame {

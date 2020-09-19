@@ -1,6 +1,6 @@
 package ca.kscheme.data;
 
-import junit.framework.Assert;
+import com.github.kdvolder.util.Assert;
 
 public class SPair extends SchemeValue implements IPair {
 	
@@ -73,11 +73,11 @@ public class SPair extends SchemeValue implements IPair {
 	}
 	
 	public void setCar(Object v) {
-		Assert.assertTrue(mutable);
+		Assert.isLegalState(mutable);
 		this.car = v;
 	}
 	public void setCdr(Object v) {
-		Assert.assertTrue(mutable);
+		Assert.isLegalState(mutable);
 		this.cdr = v;
 	}
 	public void makeImmutable() {

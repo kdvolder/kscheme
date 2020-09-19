@@ -11,11 +11,11 @@ package ca.kscheme.data;
  * attaching extra information to that Scheme object.
  * In most contexts the syntax object should be treated
  * as equivalent to the object it wraps. This can be
- * done straightforwardly by implementing the Forceable
+ * done straightforwardly by implementing the {@link Proxy}
  * interface.
  * <p>
  * Generally operations applying to values that depend on the
- * specifics of a value should force the value before using
+ * specifics of a value should unproxy the value before using
  * it.
  * 
  * @author kdvolder
