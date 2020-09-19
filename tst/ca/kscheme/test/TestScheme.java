@@ -11,6 +11,7 @@ import java.io.PrintStream;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ca.kscheme.KScheme;
@@ -336,6 +337,15 @@ public class TestScheme {
 		scheme.load("r4rstest.scm");
 		scheme.parseAndRun("(test-cont)");
 		scheme.parseAndRun("(test-sc4)");
+	}
+	
+	@Ignore
+	@Test public void stringSet() throws Exception {
+		testEval("\"abc\"", "(str-copy \"abc\")");
+	}
+	
+	@Test public void stringMap() throws Exception {
+		testEval("\"ABC\"", "(string-map char-upcase \"abc\")");
 	}
 
 	@Test public void testSendNonStatic() throws Exception {
